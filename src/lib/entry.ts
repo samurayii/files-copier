@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import { program } from "commander";
 import * as chalk from "chalk";
 import * as fs from "fs";
@@ -8,12 +7,15 @@ import * as Ajv from "ajv";
 import jtomler from "jtomler";
 import json_from_schema from "json-from-default-schema";
 import * as config_schema from "./schemes/config.json";
-import { ICliConfig } from "./config.interface";
+import { ICliConfig, IEnvironmentConfig } from "./config.interface";
  
 const pkg = finder(__dirname).next().value;
 
-let config: ICliConfig = {
-    default: {}
+const config: ICliConfig = {
+    default: {
+        rewrite: true,
+        copy: []
+    }
 };
 let environment = "default";
 
@@ -40,7 +42,9 @@ if (program.config === undefined) {
         process.exit(1);
     }
 
-    config = <ICliConfig>json_from_schema(user_pkg.copier, config_schema);
+    for (const key in user_pkg.copier) {
+        config[key] = <IEnvironmentConfig>json_from_schema(user_pkg.copier[key], config_schema);
+    }
     
 } else {
 
@@ -51,12 +55,17 @@ if (program.config === undefined) {
         process.exit(1);
     }
 
-    config = <ICliConfig>json_from_schema(jtomler(full_config_path), config_schema);
+    const user_config = <ICliConfig>jtomler(full_config_path);
+
+    for (const key in user_config) {
+        config[key] = <IEnvironmentConfig>json_from_schema(user_config[key], config_schema);
+    }
 
 }
 
 if (program.environment !== environment) {
     environment = <string>program.environment;
+    console.log(chalk.yellow(`Accepted '${environment}' environment configuration`));
 }
 
 if (config[environment] === undefined) {

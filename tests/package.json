@@ -1,0 +1,12 @@
+{
+    "copier": {
+        "pkg": {
+            "copy": [
+                {
+                    "from": "pkg_from_test1.txt",
+                    "to": "pkg_to_test1.txt"
+                }
+            ]
+        }
+    }
+}

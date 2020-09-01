@@ -1,0 +1,14 @@
+[default]                                   # name of environment
+    rewrite = true                          # rewrite file if exists
+    [[default.copy]]                        # files/folders array
+        from = "default_from_test1.txt"
+        to = "default_to_test1.txt"
+
+[dev]
+    rewrite = true
+    [[dev.copy]]
+        from = "dev_from_test1.txt"
+        to = "dev_to_test1.txt"
+    [[dev.copy]]
+        from = "dev_from_folder1"
+        to = "dev_to_folder1"

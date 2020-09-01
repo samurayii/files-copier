@@ -1,5 +1,9 @@
 export interface IEnvironmentConfig {
-    [key: string]: string
+    rewrite: boolean
+    copy: {
+        from: string
+        to: string
+    }[]
 }
 
 export interface ICliConfig {

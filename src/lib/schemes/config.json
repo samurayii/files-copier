@@ -1,1 +1,39 @@
-{}
+{
+    "type": "object",
+    "default": {},
+    "properties": {
+        "copy": {
+            "type": "array",
+            "default": [],
+            "items": {
+                "type": "object",
+                "properties": {
+                    "from": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                    },
+                    "to": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 256
+                    }
+                },
+                "required": [
+                    "from",
+                    "to"
+                ]
+            },
+            "minItems": 0
+        },
+        "rewrite": {
+            "type": "boolean",
+            "default": true,
+            "enum": [true, false]
+        }
+    },
+    "required": [
+        "copy",
+        "rewrite"
+    ]
+}
